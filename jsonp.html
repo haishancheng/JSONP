@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>JSON Demo</title>
+  <style>
+    #amount{
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <h4>您的账户余额是：<span id="amount">&&&amount&&&</span></h4>
+  <button id="pay">付款</button>
+
+  <script>
+    pay.onclick = function(){
+      let script = document.createElement('script')
+      let functionName = 'seaMountC' + parseInt(Math.random() * 10000000, 10)
+
+      //每次script请求都发送不同的函数名
+      window[functionName] = function(data){
+        amount.innerText = data.amount
+      }
+
+      script.src = './pay?callback=' + functionName
+      document.body.appendChild(script)
+
+      script.onload = function(e){
+        // 完成后删掉函数和本次添加的script标签，优化内存
+        e.currentTarget.remove()
+        delete window[functionName]
+      }
+
+      script.onerror = function(){
+        alert('fail')
+        delete window[functionName]
+      }
+    }
+  </script>
+</body>
+</html>
