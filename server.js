@@ -40,9 +40,25 @@ var server = http.createServer(function(request, response){
         'amount': ${newAmount}
       })
     `)
+  } else if(pathName === '/cors'){
+    response.statusCode = 200
+    response.setHeader('Content-Type', 'text/json;charset=utf-8')
+    response.setHeader('Access-Control-Allow-Origin', 'http://js.jirengu.com')
+    var string = JSON.stringify()
+    response.write(`
+    {
+      "people":{
+        "name": "海山城",
+        "age": "25",
+        "sex": "male"
+      }
+    }
+    `)
+    response.end()
   }else{
     response.statusCode = 404
     response.setHeader('Content-Type','text/plain;charset=utf-8')
+    response.setHeader('Access-Control-Allow-Origin', 'http://js.jirengu.com')
     response.write('找不到对应路径')
   }
   response.end()
